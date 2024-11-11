@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeStack from './app/home/screen/homestack';
+import BorrowedScreen from './app/borrowed/screen/index';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BorrowedProvider } from './app/borrowed/screen/borrowedContext';
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <BorrowedProvider>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeStack}
+        options={{
+          headerShown: false, 
+
+          tabBarIcon: ({ size, color }) => (
+            <Icon name="home" size={size} color={color} />
+          ),
+        }}
+      
+        
+        />
+        <Tab.Screen name="Borrowed" component={BorrowedScreen} 
+        options={{
+        
+          tabBarIcon: ({ size, color }) => (
+            <Icon name="book" size={size} color={color} />
+          ),
+        }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+    </BorrowedProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
